@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mb-6 flex justify-between items-center">
+    <div>
+        <h1 class="text-3xl font-black text-dcf-primary">DCF HQ Execution Dashboard</h1>
+        <p class="text-xs text-stone-500">System Verification & Launch Control</p>
+    </div>
+    <div class="bg-stone-900 text-amber-300 px-4 py-2 rounded-lg text-xs font-mono font-bold">
+        Launch Gate Status: {{ settings.publication_status }}
+    </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <!-- Brand Identity & Color Controls -->
+    <div class="bg-white p-6 rounded-xl shadow border border-stone-200">
+        <h2 class="text-lg font-bold text-dcf-primary mb-4 border-b pb-2">Brand Palette Settings</h2>
+        <form method="POST" class="space-y-4">
+            <input type="hidden" name="action" value="update_settings">
+            <div>
+                <label class="block text-xs font-bold mb-1">Primary Color (Deep Green)</label>
+                <input type="color" name="primary_color" value="{{ settings.primary_color }}" class="w-full h-10 rounded cursor-pointer">
+            </div>
+            <div>
+                <label class="block text-xs font-bold mb-1">Accent Color (Warm Gold)</label>
+                <input type="color" name="accent_color" value="{{ settings.accent_color }}" class="w-full h-10 rounded cursor-pointer">
+            </div>
+            <div>
+                <label class="block text-xs font-bold mb-1">Background Canvas</label>
+                <input type="color" name="bg_color" value="{{ settings.bg_color }}" class="w-full h-10 rounded cursor-pointer">
+            </div>
+            <button type="submit" class="bg-dcf-primary text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-stone-800">
+                Update Canvas Palette
+            </button>
+        </form>
+    </div>
+
+    <!-- Launch Authorization Gate -->
+    <div class="bg-white p-6 rounded-xl shadow border border-stone-200">
+        <h2 class="text-lg font-bold text-dcf-primary mb-2 border-b pb-2">Publication Gate Lock</h2>
+        <p class="text-xs text-stone-600 mb-4 leading-relaxed">
+            Public launch remains strictly locked until all verification criteria pass. Enter the exact founder phrase to authorize public launch.
+        </p>
+        <form method="POST" class="space-y-4">
+            <input type="hidden" name="action" value="toggle_launch">
+            <div>
+                <label class="block text-xs font-bold mb-1">Launch Phrase Authorization</label>
+                <input type="text" name="auth_phrase" placeholder="AUTHORIZE PUBLIC LAUNCH" class="w-full border p-2.5 rounded text-xs font-mono">
+            </div>
+            <button type="submit" class="bg-amber-600 text-white text-xs font-bold px-4 py-2.5 rounded hover:bg-amber-700">
+                Submit Launch Key
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Product Master List -->
+<div class="bg-white p-6 rounded-xl shadow border border-stone-200">
+    <h2 class="text-lg font-bold text-dcf-primary mb-4">Evaluated Products Master List</h2>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-stone-700">
+            <thead class="bg-stone-100 uppercase text-stone-600 font-bold">
+                <tr>
+                    <th class="p-3">ID</th>
+                    <th class="p-3">Product Name</th>
+                    <th class="p-3">ASIN</th>
+                    <th class="p-3">Market</th>
+                    <th class="p-3">Score</th>
+                    <th class="p-3">Status</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y">
+                {% for p in products %}
+                <tr>
+                    <td class="p-3 font-bold">#{{ "%03d" % p.id }}</td>
+                    <td class="p-3 font-semibold text-stone-900">{{ p.name }}</td>
+                    <td class="p-3 font-mono">{{ p.asin }}</td>
+                    <td class="p-3 font-bold">{{ p.target_market }}</td>
+                    <td class="p-3 font-bold text-amber-700">{{ p.overall_score }}/7</td>
+                    <td class="p-3"><span class="bg-green-100 text-green-800 px-2 py-0.5 rounded text-xs font-bold">{{ p.status }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

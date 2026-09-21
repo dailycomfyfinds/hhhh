@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="/" class="text-dcf-accent font-bold hover:underline mb-4 inline-block text-sm">&larr; Return to Global Finds</a>
+
+<div class="bg-white rounded-xl shadow-lg border border-stone-200 p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Left Column: Product Image & Creative Visualization Notice -->
+    <div>
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" class="w-full rounded-lg shadow border border-stone-200">
+        <p class="text-xs text-stone-400 mt-2 italic text-center">
+            * Note: Image is a DCF creative visualization, not a retailer photo.
+        </p>
+    </div>
+
+    <!-- Right Column: Scores & Evaluation -->
+    <div class="flex flex-col justify-between">
+        <div>
+            <div class="flex items-center justify-between mb-2">
+                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded border border-amber-300">Status: {{ product.status }}</span>
+                <span class="text-xs text-stone-500 font-mono">ASIN: {{ product.asin }} | Model: {{ product.model }}</span>
+            </div>
+            
+            <h1 class="text-2xl font-black text-dcf-primary mb-4 leading-tight">{{ product.name }}</h1>
+
+            <!-- DCF SEXY SCORE CARD -->
+            <div class="bg-stone-900 text-white p-4 rounded-xl mb-6 border-l-4 border-dcf-accent">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-300">DCF Evaluation Score</span>
+                    <span class="text-2xl font-black text-amber-400">{{ product.overall_score }} <span class="text-sm font-normal text-stone-400">/ 7</span></span>
+                </div>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
+                    <div>Value for Money: <strong>{{ product.score_value }}</strong></div>
+                    <div>Real Utility: <strong>{{ product.score_utility }}</strong></div>
+                    <div>Practicality: <strong>{{ product.score_practicality }}</strong></div>
+                    <div>Content Potential: <strong>{{ product.score_content }}</strong></div>
+                    <div>Demand Evidence: <strong>{{ product.score_demand }}</strong></div>
+                    <div>Women Appeal: <strong>{{ product.score_women_appeal }}</strong></div>
+                </div>
+            </div>
+
+            <h3 class="font-bold text-md text-dcf-primary border-b pb-1 mb-2">Key Features</h3>
+            <p class="text-stone-700 text-sm mb-6 leading-relaxed">{{ product.features }}</p>
+
+            <h3 class="font-bold text-md text-dcf-primary border-b pb-1 mb-2">Why Buy This? (DCF Evaluation)</h3>
+            <p class="text-stone-700 text-sm mb-6 leading-relaxed">{{ product.reasons_to_buy }}</p>
+
+            <!-- Custom Ad Space -->
+            <div class="mb-6">
+                {{ settings.custom_ad_code | safe }}
+            </div>
+        </div>
+
+        <!-- Referral CTA -->
+        <div>
+            <button class="w-full bg-dcf-accent text-white font-extrabold py-3.5 rounded-xl shadow-lg hover:bg-amber-700 transition text-center block text-md uppercase tracking-wider">
+                Check Availability at Official Retailer
+            </button>
+            <p class="text-xs text-stone-500 mt-2 text-center leading-normal">
+                DCF does not sell the product or process the purchase. The retailer controls price, availability, payment, shipping, returns, and warranty.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

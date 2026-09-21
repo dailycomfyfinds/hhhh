@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Market Selector & Search Hero -->
+<div class="bg-dcf-primary text-white p-8 rounded-xl shadow-xl mb-8 border border-amber-900/30">
+    <div class="max-w-2xl mx-auto text-center">
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-2">Products Worth Discovering.</h1>
+        <p class="text-amber-200 text-sm mb-6">AI-Powered Multi-Store Aggregator Across 20 Global Retailers</p>
+        
+        <!-- Search Input -->
+        <div class="flex gap-2">
+            <input type="text" placeholder="Search by intent, problem, or product type..." class="w-full p-3 rounded-lg text-stone-900 shadow focus:ring-2 focus:ring-amber-500 outline-none">
+            <button class="bg-dcf-accent px-6 py-3 rounded-lg font-bold hover:bg-amber-700 transition shadow">Search</button>
+        </div>
+
+        <!-- Target Market Switcher -->
+        <div class="mt-6 flex justify-center items-center space-x-3 text-xs font-semibold">
+            <span class="text-stone-300">Target Market:</span>
+            <a href="/?market=US" class="px-3 py-1 rounded-full {% if current_market == 'US' %}bg-dcf-accent text-white{% else %}bg-stone-800 text-stone-300{% endif %}">🇺🇸 United States</a>
+            <a href="/?market=EG" class="px-3 py-1 rounded-full {% if current_market == 'EG' %}bg-dcf-accent text-white{% else %}bg-stone-800 text-stone-300{% endif %}">🇪🇬 Egypt</a>
+            <a href="/?market=SA" class="px-3 py-1 rounded-full {% if current_market == 'SA' %}bg-dcf-accent text-white{% else %}bg-stone-800 text-stone-300{% endif %}">🇸🇦 Saudi Arabia</a>
+            <a href="/?market=UAE" class="px-3 py-1 rounded-full {% if current_market == 'UAE' %}bg-dcf-accent text-white{% else %}bg-stone-800 text-stone-300{% endif %}">🇦🇪 UAE</a>
+        </div>
+    </div>
+</div>
+
+<!-- Current Candidates / Product Grid -->
+<div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold text-dcf-primary">Evaluated Finds (Market: {{ current_market }})</h2>
+    <span class="text-xs bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-full border border-amber-300">DCF Quality Gate Passed</span>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {% for product in products %}
+    <div class="bg-white rounded-xl shadow-md border border-stone-200 overflow-hidden flex flex-col hover:shadow-xl transition">
+        <div class="relative">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="w-full h-52 object-cover">
+            <span class="absolute top-2 right-2 bg-dcf-primary text-amber-300 font-bold text-xs px-2 py-1 rounded shadow">
+                DCF Score: {{ product.overall_score }}/7
+            </span>
+        </span>
+        </div>
+        <div class="p-5 flex-grow flex flex-col justify-between">
+            <div>
+                <span class="text-xs font-bold text-dcf-accent uppercase tracking-wider block mb-1">ASIN: {{ product.asin }}</span>
+                <h3 class="font-bold text-lg text-stone-900 mb-2 leading-snug">{{ product.name }}</h3>
+                <p class="text-stone-600 text-xs mb-4 line-clamp-3">{{ product.features }}</p>
+            </div>
+            
+            <div>
+                <div class="bg-stone-100 p-3 rounded-lg mb-4 text-xs space-y-1">
+                    <div class="flex justify-between"><span>Real Utility Score:</span> <strong>{{ product.score_utility }}/7</strong></div>
+                    <div class="flex justify-between"><span>Value for Money:</span> <strong>{{ product.score_value }}/7</strong></div>
+                </div>
+                <a href="/product/{{ product.id }}" class="block w-full text-center bg-dcf-primary text-white font-bold py-2 rounded-lg hover:bg-stone-800 transition text-sm">
+                    View Full Evaluation
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
