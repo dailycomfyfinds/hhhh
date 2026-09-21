@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Comfy Finds (DCF) | Smart Finds for Everyday Life</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --color-primary: {{ settings.primary_color }};
+            --color-accent: {{ settings.accent_color }};
+            --color-bg: {{ settings.bg_color }};
+            --color-text: {{ settings.text_color }};
+        }
+        body { background-color: var(--color-bg); color: var(--color-text); font-family: system-ui, -apple-system, sans-serif; }
+        .bg-dcf-primary { background-color: var(--color-primary); }
+        .bg-dcf-accent { background-color: var(--color-accent); }
+        .text-dcf-primary { color: var(--color-primary); }
+        .text-dcf-accent { color: var(--color-accent); }
+        .border-dcf-accent { border-color: var(--color-accent); }
+        .border-dcf-primary { border-color: var(--color-primary); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Status Bar -->
+    <div class="bg-black text-amber-300 text-xs py-1 px-4 text-center font-mono flex justify-between items-center">
+        <span>STATUS: <strong class="uppercase text-white">{{ settings.publication_status }}</strong></span>
+        <span>الكمال لله — Perfection Belongs to Allah</span>
+        <span>MARKETS: 🇺🇸 US | 🇪🇬 EG | 🇸🇦 SA | 🇦🇪 UAE</span>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="bg-dcf-primary text-white border-b-4 border-dcf-accent shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Brand Logo Emblem -->
+            <a href="/" class="flex items-center space-x-3 group">
+                <svg class="w-12 h-12 rounded-full border-2 border-dcf-accent shadow-md transition transform group-hover:scale-105" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="96" fill="#0F2D23" stroke="#C27A3F" stroke-width="8"/>
+                    <!-- Handle / Bag Loop -->
+                    <path d="M70 70 C70 45, 130 45, 130 70" stroke="#C27A3F" stroke-width="10" fill="none" stroke-linecap="round"/>
+                    <!-- Bag Silhouette -->
+                    <rect x="50" y="70" width="100" height="85" rx="12" fill="#0F2D23" stroke="#F8F5EF" stroke-width="6"/>
+                    <!-- DCF Stylized Monogram -->
+                    <text x="100" y="122" font-family="Arial, sans-serif" font-weight="900" font-size="34" fill="#C27A3F" text-anchor="middle">DCF</text>
+                    <!-- Leaf Accents -->
+                    <path d="M135 60 Q160 50 165 75 Q140 85 135 60 Z" fill="#C27A3F"/>
+                    <path d="M145 72 Q170 70 170 90 Q145 95 145 72 Z" fill="#A4622D"/>
+                </svg>
+                <div>
+                    <span class="text-2xl font-black tracking-wide block leading-none text-white">Daily Comfy Finds</span>
+                    <span class="text-xs tracking-wider text-amber-200 uppercase font-semibold">Smart Finds for Everyday Life</span>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                <a href="/" class="hover:text-amber-300 transition">Home</a>
+                <a href="/stores" class="hover:text-amber-300 transition">20 Global Stores</a>
+                <a href="/about" class="hover:text-amber-300 transition">DCF Methodology</a>
+                {% if current_user.is_authenticated %}
+                    <a href="/admin" class="bg-amber-600 px-3 py-1 rounded text-white font-bold hover:bg-amber-700">Admin Control</a>
+                    <a href="/logout" class="text-gray-300 hover:text-white">Logout</a>
+                {% else %}
+                    <a href="/login" class="text-gray-300 hover:text-white">Admin Login</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="container mx-auto flex-grow px-4 py-6">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="bg-amber-100 border-l-4 border-amber-600 text-amber-900 p-4 mb-4 rounded shadow text-sm font-semibold">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Pillar Motto Bar -->
+    <section class="bg-stone-200 border-t border-b border-stone-300 py-4 text-center text-xs font-bold text-stone-700 tracking-wider">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div>🏠 BETTER HOME</div>
+            <div>🛒 EASIER LIFE</div>
+            <div>🌿 BRIGHTER DAYS</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dcf-primary text-gray-300 py-8 border-t-4 border-dcf-accent text-sm">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <h4 class="text-white font-bold mb-2">Daily Comfy Finds (DCF)</h4>
+                <p class="text-xs text-stone-300 leading-relaxed">
+                    Global product discovery and recommendation brand. DCF refers visitors to official retailers and does not take payments or sell products directly.
+                </p>
+                <p class="text-xs text-amber-300 mt-2 font-semibold">الكمال لله — Perfection Belongs to Allah</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-2">Standard & Discipline</h4>
+                <p class="text-xs text-stone-300 leading-relaxed">
+                    Trust before commission. Unsupported claims are never presented as fact. Retailer pages control final price, availability, shipping, and returns.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-2">Social Channels</h4>
+                <p class="text-xs text-stone-300 mb-2">Instagram • TikTok • YouTube • Facebook • Pinterest • Snapchat</p>
+                <p class="text-xs text-stone-400">Contact: comfortablefinds@gmail.com</p>
+            </div>
+        </div>
+        <div class="text-center text-xs text-stone-400 mt-6 pt-4 border-t border-stone-800">
+            &copy; 2026 Daily Comfy Finds (DCF-HQ). All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Cookie Consent Popup -->
+    {% if not request.cookies.get('dcf_analytics_consent') %}
+    <div class="fixed bottom-0 left-0 right-0 bg-stone-900 text-stone-200 p-4 border-t-2 border-dcf-accent shadow-2xl z-50 flex flex-col md:flex-row justify-between items-center text-xs space-y-2 md:space-y-0">
+        <p class="md:w-3/4">
+            <strong>Analytics Notice:</strong> Non-essential analytics (Google Analytics) activate only after user consent. Retailers may receive visit attribution information upon referral.
+        </p>
+        <div class="space-x-2">
+            <form method="POST" action="/accept-cookies" class="inline">
+                <button type="submit" class="bg-dcf-accent text-white px-4 py-2 rounded font-bold hover:opacity-90">Allow Analytics</button>
+            </form>
+            <button onclick="this.parentElement.parentElement.style.display='none'" class="bg-stone-700 text-stone-300 px-4 py-2 rounded hover:bg-stone-600">Decline</button>
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>

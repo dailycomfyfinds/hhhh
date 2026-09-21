@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mb-6">
+    <h1 class="text-3xl font-black text-dcf-primary">Supported Retailers & Marketplaces (20)</h1>
+    <p class="text-stone-600 text-sm">Official sources referenced across global regions.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    {% for store in stores %}
+    <div class="bg-white p-5 rounded-xl shadow border-l-4 border-dcf-accent border-y border-r border-stone-200">
+        <h3 class="font-bold text-lg text-dcf-primary mb-1">{{ store.name }}</h3>
+        <p class="text-xs text-stone-600 leading-relaxed">{{ store.description }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
