@@ -1,0 +1,12 @@
+[build]
+  publish = "dcf_website"
+  command = ""
+
+[build.environment]
+  PYTHON_VERSION = "3.12"
+
+[[redirects]]
+  from = "/api/publish/*"
+  to = "https://:splat"
+  status = 200
+  force = false

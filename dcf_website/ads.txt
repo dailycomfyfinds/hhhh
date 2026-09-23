@@ -1,0 +1,2 @@
+# Replace with the publisher ID supplied by Google AdSense before deployment.
+# This file intentionally contains no invented publisher identifier.
